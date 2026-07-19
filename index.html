@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صيدلية د. سعد شحاتة - رشيد</title>
+    <!-- استدعاء خط القاهرة وأيقونات FontAwesome لجعل التصميم شيك جداً -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <style>
+        @import url('https://googleapis.com');
+        
+        :root {
+            --primary-color: #0d9488;
+            --primary-dark: #0f766e;
+            --secondary-color: #22c55e;
+            --bg-light: #f8fafc;
+            --text-dark: #1e293b;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--white);
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+
+        .welcome-msg {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-top: 15px;
+            font-size: 1rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        h2 {
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* صندوق التواصل والمشاركة السريعة */
+        .share-box {
+            background: #f0fdfa;
+            border: 1px dashed var(--primary-color);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            padding: 12px 25px;
+            border-radius: 8px;
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: opacity 0.2s;
+            font-size: 1rem;
+        }
+
+        .share-btn:hover {
+            opacity: 0.9;
+        }
+
+        .whatsapp { background-color: #25D366; }
+        .facebook { background-color: #1877F2; }
+        .copy-link { background-color: #64748b; }
+
+        /* خيار الروشتة الذكية */
+        .upload-zone {
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            background-color: #fdfdfd;
+            transition: all 0.3s;
+        }
+
+        .upload-zone:hover {
+            border-color: var(--primary-color);
+            background-color: #f0fdfa;
+        }
+
+        .preview-img {
+            max-width: 200px;
+            max-height: 200px;
+            margin-top: 15px;
+            border-radius: 8px;
+            display: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            margin-top: 15px;
+            resize: vertical;
+            font-size: 0.95rem;
+        }
+
+        /* التصفح المباشر للمنتجات */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .product-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            background: #fff;
+        }
+
+        .product-img {
+            width: 100px;
+            height: 100px;
+            background: #f1f5f9;
+            margin: 0 auto 10px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .price {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* لوحة تحكم الصيدلي الافتراضية للمحاكاة */
+        .admin-panel {
+            background: #f0fdf4;
+            border: 2px solid #bbf7d0;
+            display: none;
+        }
+
+        /* الفاتورة والدفع */
+        .invoice-box {
+            background: #fff8e1;
+            border: 1px dashed #ffe082;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .payment-options {
+            margin: 15px 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        /* شريط التتبع */
+        .tracking-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .tracking-steps::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #cbd5e1;
+            z-index: 1;
+        }
+
+        .step {
+            position: relative;
+            z-index: 2;
+            background: #fff;
+            padding: 5px 10px;
+            border: 2px solid #cbd5e1;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .step.active {
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        #tracking-section {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الهيدر الرئيسي مع رسالة ترحيب مميزة لأهالي رشيد -->
+    <header>
+        <h1 style="font-size: 2.5rem; font-weight: 700;">صيدلية د/ سعد شحاتة</h1>
+        <div class="welcome-msg">
+            📍 أهلاً بكم من قلب رشيد الباسلة.. صحتكم ورعايتكم هي مهمتنا الأولى والذكية 🌸
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- صندوق التواصل السريع عبر الواتساب والمشاركة لأهالي رشيد -->
+        <div class="card share-box">
+            <h2><i class="fa-brands fa-whatsapp" style="color: #25D366;"></i> تواصل معنا مباشرة أو شارك الموقع</h2>
+            <p>اضغط على زر الواتساب للتحدث مع الصيدلية فوراً، أو انسخ الرابط لمشاركته مع عائلتك وأصدقائك في رشيد.</p>
+            <div class="share-buttons">
+                <!-- زر الواتساب يفتح رقم الدكتور مباشرة الآن -->
+                <button class="share-btn whatsapp" onclick="contactOnWhatsApp()"><i class="fa-brands fa-whatsapp"></i> تواصل عبر الواتساب</button>
+                <button class="share-btn facebook" onclick="shareOnFacebook()"><i class="fa-brands fa-facebook"></i> فيسبوك</button>
+                <button class="share-btn copy-link" onclick="copyLink()"><i class="fa-solid fa-link"></i> نسخ رابط الموقع</button>
+            </div>
+        </div>
+
+        <!-- 1. خيار الروشتة الذكية -->
+        <div class="card">
+            <h2><i class="fa-solid fa-camera"></i> خيار الروشتة الذكية</h2>
+            <p style="color: #64748b; margin-bottom: 15px;">التقط صورة للروشتة بهاتفك وارفعها فوراً لنتولى تجهيزها وتسعيرها.</p>
+            <div class="upload-zone" onclick="document.getElementById('prescription-file').click()">
+                <span style="font-size: 2rem;">📤</span>
+                <p>اضغط هنا لرفع أو تصوير الروشتة</p>
+                <input type="file" id="prescription-file" style="display: none;" accept="image/*" onchange="previewImage(event)">
+                <img id="prescription-preview" class="preview-img" alt="معاينة الروشتة">
+            </div>
+            <textarea id="prescription-notes" placeholder="اكتب أي ملاحظات هنا (مثال: هل تريد بديل أرخص إن وجد؟)..."></textarea>
+            <button class="btn" style="margin-top: 15px;" onclick="submitPrescription()">إرسال الروشتة الذكية للتحليل 🚀</button>
+        </div>
+
+        <!-- 2. التصفح المباشر -->
+        <div class="card">
+            <h2><i class="fa-solid fa-basket-shopping"></i> التصفح المباشر والمنتجات</h2>
+            <div class="products-grid">
+                <div class="product-item">
+                    <div class="product-img">🧴</div>
+                    <h3>كريم عناية بالبشرة</h3>
+                    <div class="price">150 جنيه</div>
+                    <button class="btn" onclick="addToCart('كريم بشرة', 150)">إضافة للسلة</button>
+                </div>
+                <div class="product-item">
+                    <div class="product-img">💊</div>
+                    <h3>مكمل غذائي فيتامينات</h3>
+                    <div class="price">90 جنيه</div>
